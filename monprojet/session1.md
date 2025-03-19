@@ -136,3 +136,372 @@ charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$
 *Explication* : 
 
 
+## Image vulnérable
+
+```bash 
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ docker pull vulnerables/web-dvwa
+Using default tag: latest
+latest: Pulling from vulnerables/web-dvwa
+3e17c6eae66c: Pull complete 
+0c57df616dbf: Pull complete 
+eb05d18be401: Pull complete 
+e9968e5981d2: Pull complete 
+2cd72dba8257: Pull complete 
+6cff5f35147f: Pull complete 
+098cffd43466: Pull complete 
+b3d64a33242d: Pull complete 
+Digest: sha256:dae203fe11646a86937bf04db0079adef295f426da68a92b40e3b181f337daa7
+Status: Downloaded newer image for vulnerables/web-dvwa:latest
+docker.io/vulnerables/web-dvwa:latest
+```
+
+*Explication*
+
+## Scan avec Trivy 
+
+```bash 
+                     │                                    │ https://avd.aquasec.com/nvd/cve-2019-18218                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9022    │          │              │                             │ 7.0.33-0+deb9u2                    │ php: memcpy with negative length via crafted DNS response    │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9022                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9024    │          │              │                             │                                    │ php: Out-of-bounds read in base64_decode_xmlrpc in           │
+│                          │                  │          │              │                             │                                    │ ext/xmlrpc/libxmlrpc/base64.c                                │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9024                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9637    │          │              │                             │ 7.0.33-0+deb9u3                    │ php: File rename across filesystems may allow unwanted       │
+│                          │                  │          │              │                             │                                    │ access during processing                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9637                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9638    │          │              │                             │                                    │ php: Uninitialized read in exif_process_IFD_in_MAKERNOTE     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9638                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9639    │          │              │                             │                                    │ php: Uninitialized read in exif_process_IFD_in_MAKERNOTE     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9639                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9640    │          │              │                             │                                    │ php: Invalid read in exif_process_SOFn()                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9640                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9675    │          │              │                             │                                    │ php: buffer overflow in ext/phar/tar.c                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9675                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7062    │          │              │                             │ 7.0.33-0+deb9u8                    │ php: NULL pointer dereference in PHP session upload progress │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7062                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7067    │          │              │                             │                                    │ php: out-of-bounds read when using a malformed url-encoded   │
+│                          │                  │          │              │                             │                                    │ string                                                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7067                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21702   │          │              │                             │ 7.0.33-0+deb9u11                   │ php: NULL pointer dereference in SoapClient                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21702                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21703   │          │              │                             │ 7.0.33-0+deb9u12                   │ php: Local privilege escalation via PHP-FPM                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21703                   │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2022-31625   │          │ fix_deferred │                             │                                    │ php: Uninitialized array in pg_query_params() leading to RCE │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2022-31625                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2022-31626   │          │              │                             │                                    │ php: password of excessive length triggers buffer overflow   │
+│                          │                  │          │              │                             │                                    │ leading to RCE                                               │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2022-31626                   │
+│                          ├──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-14851   │ MEDIUM   │ fixed        │                             │ 7.0.33-0+deb9u1                    │ php: exif: Buffer over-read in                               │
+│                          │                  │          │              │                             │                                    │ exif_process_IFD_in_MAKERNOTE()                              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-14851                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-17082   │          │              │                             │                                    │ php: Cross-site scripting (XSS) flaw in Apache2 component    │
+│                          │                  │          │              │                             │                                    │ via body of 'Transfer-Encoding:...                           │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-17082                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11038   │          │              │                             │ 7.0.33-0+deb9u5                    │ gd: Information disclosure in gdImageCreateFromXbm()         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11038                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11045   │          │              │                             │ 7.0.33-0+deb9u7                    │ php: DirectoryIterator class accepts filenames with embedded │
+│                          │                  │          │              │                             │                                    │ \0 byte and treats them...                                   │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11045                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11046   │          │              │                             │                                    │ php: OOB read in bc_shift_addsub                             │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11046                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11047   │          │              │                             │                                    │ php: Information disclosure in exif_read_data()              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11047                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11048   │          │              │                             │ 7.0.33-0+deb9u8                    │ php: Integer wraparounds when receiving multipart forms      │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11048                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11050   │          │              │                             │ 7.0.33-0+deb9u7                    │ php: Out of bounds read when parsing EXIF information        │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11050                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7063    │          │              │                             │ 7.0.33-0+deb9u8                    │ php: Files added to tar with Phar::buildFromIterator have    │
+│                          │                  │          │              │                             │                                    │ all-access permissions                                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7063                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7064    │          │              │                             │                                    │ php: Information disclosure in exif_read_data() function     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7064                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7066    │          │              │                             │                                    │ php: Information disclosure in function get_headers          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7066                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7070    │          │              │                             │ 7.0.33-0+deb9u10                   │ php: URL decoding of cookie names can lead to different      │
+│                          │                  │          │              │                             │                                    │ interpretation of...                                         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7070                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7071    │          │              │                             │ 7.0.33-0+deb9u11                   │ php: FILTER_VALIDATE_URL accepts URLs with invalid userinfo  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7071                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21704   │          │              │                             │                                    │ php: security issues in pdo_firebase module                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21704                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21705   │          │              │                             │                                    │ php: SSRF bypass in FILTER_VALIDATE_URL                      │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21705                   │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21707   │          │ affected     │                             │                                    │ php: Special character breaks path in xml parsing            │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21707                   │
+│                          ├──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7068    │ LOW      │ fixed        │                             │ 7.0.33-0+deb9u9                    │ php: Use of freed hash key in the phar_parse_zipfile         │
+│                          │                  │          │              │                             │                                    │ function                                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7068                    │
+├──────────────────────────┼──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ php7.0-xml               │ CVE-2017-8923    │ CRITICAL │ will_not_fix │                             │                                    │ php: Overflowing the length of string causes crash           │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2017-8923                    │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11034   │          │ fixed        │                             │ 7.0.33-0+deb9u5                    │ php: Heap buffer overflow in function exif_process_IFD_TAG() │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11034                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11035   │          │              │                             │                                    │ php: Heap buffer overflow in function exif_iif_add_value()   │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11035                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11036   │          │              │                             │                                    │ php: Buffer over-read in exif_process_IFD_TAG() leading to   │
+│                          │                  │          │              │                             │                                    │ information disclosure                                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11036                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11039   │          │              │                             │                                    │ php: Out-of-bounds read due to integer overflow in           │
+│                          │                  │          │              │                             │                                    │ iconv_mime_decode_headers()                                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11039                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11040   │          │              │                             │                                    │ php: Buffer over-read in exif_read_data()                    │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11040                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11043   │          │              │                             │ 7.0.33-0+deb9u6                    │ php: underflow in env_path_info in fpm_main.c                │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11043                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-13224   │          │              │                             │ 7.0.33-0+deb9u5                    │ oniguruma: Use-after-free in onig_new_deluxe() in regext.c   │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-13224                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9020    │          │              │                             │ 7.0.33-0+deb9u2                    │ php: Invalid memory access in function xmlrpc_decode()       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9020                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9021    │          │              │                             │                                    │ php: Heap-based buffer over-read in PHAR reading functions   │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9021                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9023    │          │              │                             │                                    │ php: Heap-based buffer over-read in mbstring regular         │
+│                          │                  │          │              │                             │                                    │ expression functions                                         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9023                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9641    │          │              │                             │ 7.0.33-0+deb9u3                    │ php: Uninitialized read in exif_process_IFD_in_TIFF          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9641                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7059    │          │              │                             │ 7.0.33-0+deb9u7                    │ php: Out of bounds read in php_strip_tags_ex                 │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7059                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7060    │          │              │                             │                                    │ php: Global buffer-overflow in mbfl_filt_conv_big5_wchar     │
+│                          │                  │          │              │                             │                                    │ function                                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7060                    │
+│                          ├──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2017-7189    │ HIGH     │ will_not_fix │                             │                                    │ php: misparsing fsockopen calls in main/streams/xp_socket.c  │
+│                          │                  │          │              │                             │                                    │ leads to information disclosure                              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2017-7189                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2017-7272    │          │              │                             │                                    │ php: potential SSRF via fsockopen                            │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2017-7272                    │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-14883   │          │ fixed        │                             │ 7.0.33-0+deb9u1                    │ php: exif: integer overflow leading to out-of-bound buffer   │
+│                          │                  │          │              │                             │                                    │ read in exif_thumbnail_extract()                             │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-14883                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-19518   │          │              │                             │                                    │ php: imap_open() allows running arbitrary shell commands via │
+│                          │                  │          │              │                             │                                    │ mailbox parameter                                            │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-19518                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-19935   │          │              │                             │                                    │ php: NULL pointer dereference in ext/imap/php_imap.c         │
+│                          │                  │          │              │                             │                                    │ resulting in a denial of service...                          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-19935                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-20783   │          │              │                             │                                    │ php: Buffer over-read in PHAR reading functions              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-20783                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11041   │          │              │                             │ 7.0.33-0+deb9u5                    │ php: Heap buffer over-read in exif_scan_thumbnail()          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11041                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11042   │          │              │                             │                                    │ php: Heap buffer over-read in exif_process_user_comment()    │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11042                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-18218   │          │              │                             │ 7.0.33-0+deb9u11                   │ file: heap-based buffer overflow in cdf_read_property_info   │
+│                          │                  │          │              │                             │                                    │ in cdf.c                                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-18218                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9022    │          │              │                             │ 7.0.33-0+deb9u2                    │ php: memcpy with negative length via crafted DNS response    │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9022                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9024    │          │              │                             │                                    │ php: Out-of-bounds read in base64_decode_xmlrpc in           │
+│                          │                  │          │              │                             │                                    │ ext/xmlrpc/libxmlrpc/base64.c                                │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9024                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9637    │          │              │                             │ 7.0.33-0+deb9u3                    │ php: File rename across filesystems may allow unwanted       │
+│                          │                  │          │              │                             │                                    │ access during processing                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9637                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9638    │          │              │                             │                                    │ php: Uninitialized read in exif_process_IFD_in_MAKERNOTE     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9638                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9639    │          │              │                             │                                    │ php: Uninitialized read in exif_process_IFD_in_MAKERNOTE     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9639                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9640    │          │              │                             │                                    │ php: Invalid read in exif_process_SOFn()                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9640                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-9675    │          │              │                             │                                    │ php: buffer overflow in ext/phar/tar.c                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-9675                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7062    │          │              │                             │ 7.0.33-0+deb9u8                    │ php: NULL pointer dereference in PHP session upload progress │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7062                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7067    │          │              │                             │                                    │ php: out-of-bounds read when using a malformed url-encoded   │
+│                          │                  │          │              │                             │                                    │ string                                                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7067                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21702   │          │              │                             │ 7.0.33-0+deb9u11                   │ php: NULL pointer dereference in SoapClient                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21702                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21703   │          │              │                             │ 7.0.33-0+deb9u12                   │ php: Local privilege escalation via PHP-FPM                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21703                   │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2022-31625   │          │ fix_deferred │                             │                                    │ php: Uninitialized array in pg_query_params() leading to RCE │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2022-31625                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2022-31626   │          │              │                             │                                    │ php: password of excessive length triggers buffer overflow   │
+│                          │                  │          │              │                             │                                    │ leading to RCE                                               │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2022-31626                   │
+│                          ├──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-14851   │ MEDIUM   │ fixed        │                             │ 7.0.33-0+deb9u1                    │ php: exif: Buffer over-read in                               │
+│                          │                  │          │              │                             │                                    │ exif_process_IFD_in_MAKERNOTE()                              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-14851                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-17082   │          │              │                             │                                    │ php: Cross-site scripting (XSS) flaw in Apache2 component    │
+│                          │                  │          │              │                             │                                    │ via body of 'Transfer-Encoding:...                           │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-17082                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11038   │          │              │                             │ 7.0.33-0+deb9u5                    │ gd: Information disclosure in gdImageCreateFromXbm()         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11038                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11045   │          │              │                             │ 7.0.33-0+deb9u7                    │ php: DirectoryIterator class accepts filenames with embedded │
+│                          │                  │          │              │                             │                                    │ \0 byte and treats them...                                   │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11045                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11046   │          │              │                             │                                    │ php: OOB read in bc_shift_addsub                             │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11046                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11047   │          │              │                             │                                    │ php: Information disclosure in exif_read_data()              │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11047                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11048   │          │              │                             │ 7.0.33-0+deb9u8                    │ php: Integer wraparounds when receiving multipart forms      │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11048                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2019-11050   │          │              │                             │ 7.0.33-0+deb9u7                    │ php: Out of bounds read when parsing EXIF information        │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2019-11050                   │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7063    │          │              │                             │ 7.0.33-0+deb9u8                    │ php: Files added to tar with Phar::buildFromIterator have    │
+│                          │                  │          │              │                             │                                    │ all-access permissions                                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7063                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7064    │          │              │                             │                                    │ php: Information disclosure in exif_read_data() function     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7064                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7066    │          │              │                             │                                    │ php: Information disclosure in function get_headers          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7066                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7070    │          │              │                             │ 7.0.33-0+deb9u10                   │ php: URL decoding of cookie names can lead to different      │
+│                          │                  │          │              │                             │                                    │ interpretation of...                                         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7070                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7071    │          │              │                             │ 7.0.33-0+deb9u11                   │ php: FILTER_VALIDATE_URL accepts URLs with invalid userinfo  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7071                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21704   │          │              │                             │                                    │ php: security issues in pdo_firebase module                  │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21704                   │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21705   │          │              │                             │                                    │ php: SSRF bypass in FILTER_VALIDATE_URL                      │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21705                   │
+│                          ├──────────────────┤          ├──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-21707   │          │ affected     │                             │                                    │ php: Special character breaks path in xml parsing            │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-21707                   │
+│                          ├──────────────────┼──────────┼──────────────┤                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2020-7068    │ LOW      │ fixed        │                             │ 7.0.33-0+deb9u9                    │ php: Use of freed hash key in the phar_parse_zipfile         │
+│                          │                  │          │              │                             │                                    │ function                                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2020-7068                    │
+├──────────────────────────┼──────────────────┼──────────┤              ├─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ rsync                    │ CVE-2016-9841    │ CRITICAL │              │ 3.1.2-1+deb9u1              │ 3.1.2-1+deb9u2                     │ zlib: Out-of-bounds pointer arithmetic in inffast.c          │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2016-9841                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2016-9843    │          │              │                             │                                    │ zlib: Big-endian out-of-bounds pointer                       │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2016-9843                    │
+│                          ├──────────────────┼──────────┤              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2016-9840    │ HIGH     │              │                             │                                    │ zlib: Out-of-bounds pointer arithmetic in inftrees.c         │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2016-9840                    │
+│                          ├──────────────────┤          │              │                             │                                    ├──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2016-9842    │          │              │                             │                                    │ zlib: Undefined left shift of negative number                │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2016-9842                    │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2018-5764    │          │              │                             │ 3.1.2-1+deb9u3                     │ rsync: sanitization bypass in parse_argument in options.c    │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-5764                    │
+├──────────────────────────┼──────────────────┼──────────┤              ├─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ tar                      │ CVE-2018-20482   │ MEDIUM   │              │ 1.29b-1.1                   │ 1.29b-1.1+deb9u1                   │ tar: Infinite read loop in sparse_dump_region function in    │
+│                          │                  │          │              │                             │                                    │ sparse.c                                                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-20482                   │
+├──────────────────────────┼──────────────────┼──────────┤              ├─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ tzdata                   │ DLA-2424-1       │ UNKNOWN  │              │ 2018e-0+deb9u1              │ 2020d-0+deb9u1                     │ tzdata - new upstream version                                │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┤                                                              │
+│                          │ DLA-2509-1       │          │              │                             │ 2020e-0+deb9u1                     │                                                              │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┤                                                              │
+│                          │ DLA-2542-1       │          │              │                             │ 2021a-0+deb9u1                     │                                                              │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┤                                                              │
+│                          │ DLA-2797-1       │          │              │                             │ 2021a-0+deb9u2                     │                                                              │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ DLA-2963-1       │          │              │                             │ 2021a-0+deb9u3                     │ tzdata - new timezone database                               │
+│                          ├──────────────────┤          │              │                             ├────────────────────────────────────┤                                                              │
+│                          │ DLA-3051-1       │          │              │                             │ 2021a-0+deb9u4                     │                                                              │
+├──────────────────────────┼──────────────────┼──────────┼──────────────┼─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ util-linux               │ CVE-2016-2779    │ HIGH     │ affected     │ 2.29.2-1+deb9u1             │                                    │ util-linux: runuser tty hijack via TIOCSTI ioctl             │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2016-2779                    │
+│                          ├──────────────────┼──────────┤              │                             ├────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│                          │ CVE-2021-37600   │ LOW      │              │                             │                                    │ util-linux: integer overflow can lead to buffer overflow in  │
+│                          │                  │          │              │                             │                                    │ get_sem_elements() in sys-utils/ipcutils.c...                │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2021-37600                   │
+├──────────────────────────┼──────────────────┼──────────┼──────────────┼─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ xz-utils                 │ CVE-2022-1271    │ HIGH     │ fixed        │ 5.2.2-1.2+b1                │ 5.2.2-1.2+deb9u1                   │ gzip: arbitrary-file-write vulnerability                     │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2022-1271                    │
+├──────────────────────────┼──────────────────┤          │              ├─────────────────────────────┼────────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ zlib1g                   │ CVE-2018-25032   │          │              │ 1:1.2.8.dfsg-5              │ 1:1.2.8.dfsg-5+deb9u1              │ zlib: A flaw found in zlib when compressing (not             │
+│                          │                  │          │              │                             │                                    │ decompressing) certain inputs...                             │
+│                          │                  │          │              │                             │                                    │ https://avd.aquasec.com/nvd/cve-2018-25032                   │
+└──────────────────────────┴──────────────────┴──────────┴──────────────┴─────────────────────────────┴────────────────────────────────────┴──────────────────────────────────────────────────────────────┘
+
+/etc/ssl/private/ssl-cert-snakeoil.key (secrets)
+
+Total: 1 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 1, CRITICAL: 0)
+
+HIGH: AsymmetricPrivateKey (private-key)
+═════════════════════════════════════════════════════════════════════════════════
+Asymmetric Private Key
+─────────────────────────────────────────────────────────────────────────────────
+ /etc/ssl/private/ssl-cert-snakeoil.key:1 (added by 'apt-get update &&     apt-get upgrade -y')
+─────────────────────────────────────────────────────────────────────────────────
+   1 [ -----BEGIN PRIVATE KEY-----*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************-----END PRIVATE KEY-----
+   2   
+─────────────────────────────────────────────────────────────────────────────────
+
+
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ 
+
+```
+
