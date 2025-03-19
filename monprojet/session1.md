@@ -505,3 +505,45 @@ charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$
 
 ```
 
+## Scan des vulnérabilités 
+
+Scan basique mais pas avecv notre image 
+
+```bash
+
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ grype alpine:latest
+ ✔ Vulnerability DB                [updated]  
+ ✔ Loaded image                                                  alpine:latest 
+ ✔ Parsed image                    sha256:aded1e1a5b3705116fa0a92ba074a5e0b0031  
+ ✔ Cataloged contents              a8b452e4987d5d281800a3174e98cea4c5c6d5311c81  
+   ├── ✔ Packages                        [15 packages]  
+   ├── ✔ File digests                    [82 files]  
+   ├── ✔ File metadata                   [82 locations]  
+   └── ✔ Executables                     [17 executables]  
+ ✔ Scanned for vulnerabilities     [0 vulnerability matches]  
+   ├── by severity: 0 critical, 0 high, 0 medium, 0 low, 0 negligible
+   └── by status:   0 fixed, 0 not-fixed, 0 ignored 
+No vulnerabilities found
+
+```
+
+*Explication* : 
+
+**Avec notre image** : 
+
+```bash 
+
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ grype image_simple
+ ✔ Loaded image                                            image_simple:latest 
+ ✔ Parsed image                    sha256:a5f4e91f25f43dc330363423c4750b915427f  
+ ✔ Cataloged contents              42b6780680164408d845ba58090dceeed577c7edb2ea  
+   ├── ✔ Packages                        [15 packages]  
+   ├── ✔ File digests                    [82 files]  
+   ├── ✔ File metadata                   [82 locations]  
+   └── ✔ Executables                     [17 executables]  
+ ✔ Scanned for vulnerabilities     [0 vulnerability matches]  
+   ├── by severity: 0 critical, 0 high, 0 medium, 0 low, 0 negligible
+   └── by status:   0 fixed, 0 not-fixed, 0 ignored 
+No vulnerabilities found
+```
+
