@@ -67,3 +67,72 @@ var
 
 *Explication* : 
 
+
+
+
+
+## Création d'un container simple 
+
+```bash 
+
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ sudo docker build -t image_simple .
+[sudo] password for charles: 
+[+] Building 0.9s (6/6) FINISHED                                  docker:default
+ => [internal] load build definition from Dockerfile                        0.0s
+ => => transferring dockerfile: 122B                                        0.0s
+ => [internal] load metadata for docker.io/library/alpine:latest            0.0s
+ => [internal] load .dockerignore                                           0.0s
+ => => transferring context: 2B                                             0.0s
+ => [1/2] FROM docker.io/library/alpine:latest                              0.0s
+ => [2/2] RUN adduser -D appuser                                            0.7s
+ => exporting to image                                                      0.1s
+ => => exporting layers                                                     0.0s
+ => => writing image sha256:a5f4e91f25f43dc330363423c4750b915427ffdb2f1a1b  0.0s
+ => => naming to docker.io/library/image_simple                             0.0s
+
+ ```
+
+*Explication* : 
+
+
+## Part 2 
+
+```bash
+
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ sudo docker run image_simple
+Container sécurisé
+
+```
+
+- UID : 
+
+```bash 
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ sudo docker run image_simple id appuser
+uid=1000(appuser) gid=1000(appuser) groups=1000(appuser)
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ 
+
+```
+
+*Explication* : 
+
+
+
+## Déconnecter du réseau 
+
+### Problème lié aux permissions et à la création d'un container 
+
+**Résolution** : 
+
+```bash
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+a962eb7fedbb   nginx     "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp    test-container
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ sudo docker run -d --name my_image_container image_simple
+[sudo] password for charles: 
+2b36813a1e11598076a193caf96a954dc7cec671ac4d48ea152a0221624faaf7
+charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ 
+```
+
+*Explication* : 
+
+
