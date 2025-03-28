@@ -7,7 +7,7 @@
 
 ## Déployer un Cluster Kubernetes avec Kind
 Créer un cluster avec 2 master node et 2 worker node avec un l'aide d'un fichier yaml. 
-![alt text](image_session3\image.png)
+![alt text](image_session3/image.png)
 
 Vérifier l’état du cluster
 
