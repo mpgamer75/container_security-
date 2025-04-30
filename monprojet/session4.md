@@ -41,7 +41,6 @@ Pour l'image:v2
 ## Sécurité dans les Pipelines CI/CD
 
 ![alt text](image_session4/image-11.png)
-![alt text](image_session4/image-13.png)
 
 - Lint (hadolint-scan) → vérifie la qualité du Dockerfile.
 
@@ -49,8 +48,18 @@ Pour l'image:v2
 
 - Verify (verify_image) → vérifie la signature Cosign.
 
-- Scan (trivy-scan) →  Trivy détecte une vulnérabilité critique dans l'image.
+- Scan (trivy-scan) →  Trivy détecte les vulnérabilités critique dans l'image.
 
 ![alt text](image_session4/image-12.png)
 
-Ici il n'arrive pas à passer le lint (l'étape du Dockerfile)
+Ici il n'arrive pas à passer le scan Trivy détecte une vulnérabilité critique dans l'image.
+
+      ┌─────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────┬─────────────────────────────────────────────────────────────┐
+│ Library │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                            Title                            │
+├─────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────┼─────────────────────────────────────────────────────────────┤
+│ zlib    │ CVE-2022-37434 │ CRITICAL │ fixed  │ 1.2.12-r0         │ 1.2.12-r2     │ zlib: heap-based buffer over-read and overflow in inflate() │
+│         │                │          │        │                   │               │ in inflate.c via a...                                       │
+│         │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2022-37434                  │
+└─────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴─────────────────────────────────────────────────────────────┘
+Cleaning up project directory and file based variables
+ERROR: Job failed: exit code 
