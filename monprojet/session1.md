@@ -9,6 +9,13 @@
 - ```bash
     docker run -it --rm alpine sh
   ```
+*Explication*: 
+
+1. **`docker run`** : crée et démarre un nouveau conteneur à partir d'une image.  
+2. **`-i -t`** : active le mode interactif avec un pseudo-terminal (stdin ouvert + TTY).  
+3. **`--rm`** : supprime automatiquement le conteneur à la sortie pour ne pas laisser de conteneurs arrêtés.  
+4. **`alpine`** : image Linux Alpine, très légère.  
+5. **`sh`** : commande lancée dans le conteneur (ici, shell), sous l’utilisateur `root`.
 
 Cette commande lance une image docker, fais un pull puis nous place en tant que super user ( root ) 
 
@@ -32,6 +39,12 @@ charles@ubuntu-hack-uwu:~$
 ```
 *Explication* : 
 
+1. Le tableau ressemble à la sortie de `docker stats`, qui affiche l’ID, le nom, l’usage CPU, mémoire, I/O, etc.  
+2. Ici, on est dans un shell `sh` lancé **à l’intérieur** du conteneur, donc on ne voit pas de stats en temps réel.  
+3. Pour surveiller un conteneur, on quitte le shell puis on exécute :  
+   ```bash
+   docker stats <CONTAINER_ID>
+4. `docker stats` fournit un flux continu des ressources consommées par les conteneurs actifs.
 
 
 
@@ -69,6 +82,14 @@ var
 
 *Explication* : 
 
+1. `-v /:/mnt` : monte le système de fichiers racine de l’hôte (`/`) dans le conteneur sous le point de montage `/mnt`.
+
+2. Accès total : le conteneur peut lister et modifier tous les fichiers de l’hôte, contournant l’isolation par namespaces et cgroups.
+
+3. Risque majeur : un attaquant ayant lancé ce conteneur pourrait compromettre l’intégrité de l’hôte (supprimer, modifier ou corrompre des fichiers critiques).
+
+4. Bonne pratique : éviter les montages en mode lecture-écriture sur tout le système ou, à minima, limiter aux dossiers strictement nécessaires et en lecture seule.
+
 
 
 
@@ -96,6 +117,19 @@ charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$ sudo docker buil
 
 *Explication* : 
 
+1. docker build : construit une image à partir du Dockerfile situé dans le contexte.
+
+2. -t image_simple : donne le tag (nom) image_simple à l’image créée.
+
+3. Contexte . : envoie le contenu du répertoire courant au démon Docker pour construire l’image.
+
+Étapes courantes :
+
+    a. FROM alpine:latest → image de base légère.
+
+    b. RUN adduser -D appuser → création d’un utilisateur non-root nommé appuser.
+
+5. Résultat : image locale référencée par image_simple et identifiée par un SHA256.
 
 ## Part 2 
 
@@ -117,6 +151,13 @@ charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$
 
 *Explication* : 
 
+1. Le conteneur exécute la commande par défaut déclarée en CMD (affiche “Container sécurisé”).
+
+2. Vérification de l’utilisateur :
+
+    . id appuser montre UID=1000, donc non-root.
+
+3. Avantage : réduire la surface d’attaque en n’octroyant pas les privilèges root au processus dans le conteneur.
 
 
 ## Déconnecter du réseau 
@@ -136,6 +177,15 @@ charles@ubuntu-hack-uwu:~/Desktop/container_security/monprojet$
 ```
 
 *Explication* : 
+
+1. `docker ps` : liste les conteneurs en cours d’exécution avec leurs IDs, images, noms, ports, etc.
+
+2. `-d` : détache le conteneur (mode background), libérant votre terminal.
+
+3. `--name my_image_container` : donne un nom lisible au conteneur pour faciliter sa gestion.
+
+4. `sudo` peut être requis si l’utilisateur n’appartient pas au groupe `docker`.
+
 
 
 ## Image vulnérable
@@ -158,6 +208,14 @@ docker.io/vulnerables/web-dvwa:latest
 ```
 
 *Explication*
+
+1. docker pull vulnerables/web-dvwa : télécharge l’image DVWA (Damn Vulnerable Web Application) depuis Docker Hub.
+
+2. Couches : chaque couche est récupérée et validée (Pull complete).
+
+3. Digest SHA256 : assure l’intégrité et l’authenticité de l’image téléchargée.
+
+4. Usage pédagogique : DVWA sert de plateforme pour tester des vulnérabilités web dans un environnement contrôlé.
 
 ## Scan avec Trivy 
 
@@ -530,6 +588,18 @@ No vulnerabilities found
 ```
 
 *Explication* : 
+
+1. **`grype alpine:latest`** lance un scan de l’image officielle Alpine en récupérant d’abord la base de données des vulnérabilités (étape “Vulnerability DB [updated]”).  
+2. **Chargement et parsing** : Grype charge l’image (Loaded image) et détermine son hash SHA256 pour s’assurer de l’intégrité (Parsed image).  
+3. **Catalogage du contenu** :  
+   1. Il recense les **packages** installés (ici, 15 packages).  
+   2. Il calcule les **digests** des fichiers (82 fichiers) et enregistre leurs métadonnées.  
+   3. Il identifie les **exécutables** (17 executables).  
+4. **Scan des vulnérabilités** :  
+   - Grype compare chaque package/fichier référencé à sa base de données.  
+   - Résultat : **0 vulnérabilité détectée** (0 critical, 0 high, etc.).  
+5. **Conclusion pour Alpine** : l’image Alpine:latest, dans sa version actuelle, ne comporte aucune vulnérabilité connue selon Grype.
+
 
 **Avec notre image** : 
 
